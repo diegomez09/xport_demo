@@ -6,7 +6,7 @@ node {
 
         checkout scm
     }
-
+ stages {
     stage('Build image') {
         /* This builds the actual image */
 
@@ -21,7 +21,7 @@ node {
     }
   
     stage('Push image') 
-	when {branch 'master'}
+	when { branch 'master' }
 	steps{
         /* 
 			You would need to first register with DockerHub before you can push images to your account
@@ -40,5 +40,5 @@ node {
 	
 	}
     
-	
+ }
 }
