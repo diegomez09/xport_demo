@@ -19,8 +19,10 @@ node {
             echo "Tests passed"
         }
     }
-
-    stage('Push image') {
+  
+    stage('Push image') 
+	when {branch 'master'}
+	steps{
         /* 
 			You would need to first register with DockerHub before you can push images to your account
 		*/
@@ -30,4 +32,13 @@ node {
             } 
                 echo "Trying to Push Docker Build to DockerHub"
     }
+    stage('merge to master') 
+	when { branch 'test'}
+	steps{
+	
+	sh 'git merge master'
+	
+	}
+    
+	
 }
