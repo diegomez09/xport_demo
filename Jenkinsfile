@@ -10,14 +10,15 @@ node {
     stage('Build image') {
         /* This builds the actual image */
         if(env.BRANCH_NAME  =="master"){
-        app = docker.build("aztoatl/web_server:release")
+        app = docker.build("aztoatl/web_server:latest")
 	}
+	     /* This builds the test image */
 	 if(env.BRANCH_NAME  =="test"){
-        app = docker.build("aztoatl/web_server:test")
+        app = docker.build("aztoatl/web_server:release")
 	}
 	    
     }
-
+/*this is a fake test*/
     stage('Test image') {
         
         app.inside {
@@ -31,9 +32,7 @@ node {
 	    if(env.BRANCH_NAME  =="master"){
  	    
 	
-        /* 
-			You would need to first register with DockerHub before you can push images to your account
-		*/
+        /*  pushing images todockerhub*/
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
