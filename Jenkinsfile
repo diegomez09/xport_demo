@@ -20,8 +20,12 @@ node {
         }
     }
   
-    stage('Push image') 
-	{
+    stage('Push image') {
+	    
+    echo 'branch name ' + env.BRANCH_NAME
+	    if(env.BRANCH_NAME  =="master"){
+ 	    
+	
         /* 
 			You would need to first register with DockerHub before you can push images to your account
 		*/
@@ -30,6 +34,7 @@ node {
             app.push("latest")
             } 
                 echo "Trying to Push Docker Build to DockerHub"
+	    }
     }
 
     
