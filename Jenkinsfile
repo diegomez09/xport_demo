@@ -18,7 +18,7 @@ node {
 	}
 	    
     }
-/*this is a fake test/
+/*this is a fake test*/
     stage('Test image') {
         
         app.inside {
