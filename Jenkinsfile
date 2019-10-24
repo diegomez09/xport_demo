@@ -10,11 +10,11 @@ node {
     stage('Build image') {
         /* This builds the actual image */
         if(env.BRANCH_NAME  =="master"){
-        app = docker.build("aztoatl/web_server:release")
+        app = docker.build("aztoatl/web_server:latest")
 	}
 	     /* This builds the test image */
 	 if(env.BRANCH_NAME  =="test"){
-        app = docker.build("aztoatl/web_server:test")
+        app = docker.build("aztoatl/web_server:release")
 	}
 	    
     }
