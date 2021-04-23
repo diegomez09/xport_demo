@@ -23,7 +23,7 @@ stage('Push image') {
         echo 'branch name ' + env.BRANCH_NAME
 	    if(env.BRANCH_NAME  =="master"){
         /*  pushing images todockerhub*/
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub')
+        docker.withRegistry('https://registry.hub.docker.com', 'DOCKER_CREDENTIALS')
                 echo "Trying to Push Docker Build to DockerHub"
         }
            }
