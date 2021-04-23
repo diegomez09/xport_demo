@@ -1,30 +1,32 @@
-pipeline {
+pipeline{
+    environment{
+        registry = "diegomezg/docker-apache"
+        resistryCredential = 'DOCKER_CREDENTIALS'
+    }
     agent any
     stages{
-        stage("A"){
+        stage('Clone repository'){
             steps{
-                echo "========executing A========"
+                echo '=============== Cloning repository ==============='
                 checkout scm
-                }
-            stage('Build image') {
-                /* This builds the actual image */
-                if(env.BRANCH_NAME  =="master"){
-                app = docker.build("diegomezg/web_server:latest")
-	        }
-	    stage('Push image'){
-            if(env.BRANCH_NAME  =="test"){
-            app = docker.build("diegomezg/web_server:release")
-        } 
-	}
-	    
-    }
-stage('Push image') {
-    steps{
-        echo 'branch name ' + env.BRANCH_NAME
-	    if(env.BRANCH_NAME  =="master"){
-        /*  pushing images todockerhub*/
-        docker.withRegistry('https://registry.hub.docker.com', 'DOCKER_CREDENTIALS')
-                echo "Trying to Push Docker Build to DockerHub"
+            }
         }
-           }
+        stage('Build image'){
+            steps{
+                script{
+                    echo '================= Building image ================='
+                    dockerImage = docker.build registry + ":$BUILD_ID"
+                }
+            }
+        }
+        stage('Deploy image'){
+            steps{
+                script{
+                    echo '================= Deplying image ================='
+                     docker.withRegistry('https://registry.hub.docker.com', 'registry')
+                    }
+                }
+            }
+        }
+    }
 }
